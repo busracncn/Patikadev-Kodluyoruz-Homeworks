@@ -37,3 +37,12 @@ SELECT COUNT(payment_id), (customer_id) FROM payment
 GROUP BY customer_id
 ORDER BY COUNT(payment_id) DESC;
 
+--Different perspective
+
+SELECT customer_id, COUNT(payment_id) FROM payment
+GROUP BY customer_id
+HAVING COUNT(payment_id) = 
+(
+    SELECT MAX(count) FROM (SELECT customer_id, COUNT(payment_id) count FROM payment GROUP BY customer_id) AS sq
+)
+
